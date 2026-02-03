@@ -1,3 +1,12 @@
+/**
+ * APP CONTEXT
+ *
+ * Handles app-wide UI state (not auth - see AuthContext)
+ * - Theme preference
+ * - Notifications/toasts
+ * - UI preferences
+ */
+
 import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const AppContext = createContext(null);
@@ -11,23 +20,10 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    id: 1,
-    name: 'Alex Johnson',
-    email: 'alex.johnson@company.com',
-    avatar: 'AJ',
-  });
-
-  // Theme state
   const [theme, setTheme] = useState('light');
-
-  // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  // Notification state
   const [notifications, setNotifications] = useState([]);
 
-  // Actions
   const toggleTheme = useCallback(() => {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   }, []);
@@ -40,21 +36,15 @@ export const AppProvider = ({ children }) => {
     const id = Date.now();
     setNotifications(prev => [...prev, { id, message, type }]);
 
-    // Auto-remove after 3 seconds
     setTimeout(() => {
       setNotifications(prev => prev.filter(n => n.id !== id));
     }, 3000);
   }, []);
 
   const value = {
-    // State
-    user,
     theme,
     sidebarOpen,
     notifications,
-
-    // Actions
-    setUser,
     toggleTheme,
     toggleSidebar,
     addNotification,

@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { IconArrowRight, IconCircleCheck, IconClock, IconList } from '@tabler/icons-react';
 import { useTasks } from '../hooks/useTasks';
-import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 const getGreeting = () => {
   const hour = new Date().getHours();
@@ -35,7 +35,7 @@ const StatCard = ({ label, value, color, icon: Icon }) => (
 );
 
 export const Dashboard = () => {
-  const { user } = useAppContext();
+  const { user } = useAuth();
   const { data: tasks = [] } = useTasks();
 
   const stats = {
